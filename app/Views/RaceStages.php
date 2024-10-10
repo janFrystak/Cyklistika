@@ -13,7 +13,7 @@ $stageCount=0;
 $table->setHeading(['Stage id', "Date", "Start", "Destination", "Leangth", "Type"]);
 //var_dump($yearInfo);
 
-
+var_dump($stageInfo);
 foreach($stageInfo as $stage){
 $table->addRow($stage->id, $stage->date, $stage->departure, $stage->arrival, $stage->distance, $stage->name);
 }

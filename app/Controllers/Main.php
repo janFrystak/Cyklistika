@@ -5,7 +5,7 @@ use App\Models\Race;
 use App\Models\RaceYear;
 use App\Models\UciTourType;
 use App\Models\Stage;
-use App\Models\ParkourType;
+use App\Models\ParcourType;
 
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -25,7 +25,7 @@ class Main extends BaseController
         $this->racedYear = new RaceYear();
         $this->tourType = new UciTourType();
         $this->stage = new Stage();
-        $this->parkour = new ParkourType();
+        $this->parkour = new ParcourType();
        
        
 
@@ -44,10 +44,18 @@ class Main extends BaseController
     }
     public function getYearInfo($id)
     {
-        $data["yearInfo"] = $this->racedYear->where("id_race", $id)
+        $data["yearInfo"] = $this->racedYear
+        ->select('real_name, year, start_date, end_date, logo, name, sum(distance) as distance, count(*) as count, id_race_year')
+        ->join('uci_tour_type', 'uci_tour_type.id = race_year.uci_tour', 'inner')
+        ->join('stage', 'stage.id_race_year = race_year.id', 'inner')
+        ->where('id_race', $id)
+        ->groupBy('id_race_year')
+        ->find();
+
+       /* ->select('real_name, year, start_date, end_date, logo, name, sum(distance) as distance, count(*) as count, id_race_year')
         ->join("uci_tour_type", "race_year.uci_tour = uci_tour_type.id", "inner")
         ->join("stage", "race_year.id_race = stage.id_race_year", "inner")->findAll();
-       // $data["stageInfo"] = $this->stage->where("")
+       // $data["stageInfo"] = $this->stage->where("")*/
         
         echo view("RacedYears", $data);
     }

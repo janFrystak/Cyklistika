@@ -39,7 +39,8 @@ $kompImg = [
 
 ];
 
-$table->addRow($year->real_name,$date, img($kompImg), $year->name, anchor("RaceStages/".$year->id, $stageCount));
+/*$table->addRow($year->real_name,  $date, img($kompImg), $year->name, anchor("RaceStages/".$year->id, $year->count));*/
+$table->addRow($year->real_name,    $date, img($kompImg), $year->name, anchor('RaceStages/'.$year->id_race_year, $year->count));
 
 }
 $template = [
